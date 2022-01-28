@@ -21,7 +21,7 @@ var strategy = new Auth0Strategy(
     clientID: process.env.AUTH0_CLIENT_ID,
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
     callbackURL:
-      process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback'
+      process.env.BASE_URL || 'http://localhost:3000/callback'
   },
 
 
@@ -71,7 +71,7 @@ if (app.get('env') === 'production') {
   // errors with passport-auth0.
   // Ref: https://github.com/auth0/passport-auth0/issues/70#issuecomment-480771614
   // Ref: https://www.npmjs.com/package/express-session#cookiesecure
-  // app.set('trust proxy', 1);
+  app.set('trust proxy', 1);
   
   sess.cookie.secure = true; // serve secure cookies, requires https
 }

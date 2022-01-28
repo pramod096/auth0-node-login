@@ -23,6 +23,8 @@ var strategy = new Auth0Strategy(
     callbackURL:
       process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback'
   },
+
+
   function (accessToken, refreshToken, extraParams, profile, done) {
     // accessToken is the token to call Auth0 API (not needed in the most cases)
     // extraParams.id_token has the JSON Web Token
@@ -69,7 +71,7 @@ if (app.get('env') === 'production') {
   // errors with passport-auth0.
   // Ref: https://github.com/auth0/passport-auth0/issues/70#issuecomment-480771614
   // Ref: https://www.npmjs.com/package/express-session#cookiesecure
-  // app.set('trust proxy', 1);
+  app.set('trust proxy', 1);
   
   sess.cookie.secure = true; // serve secure cookies, requires https
 }

@@ -31,13 +31,12 @@ router.get('/callback', function (req, res, next) {
 
 // Perform session logout and redirect to homepage
 router.get('/logout', (req, res) => {
-  req.logout();
-
-  var returnTo = req.protocol + '://' + req.hostname;
-  var port = req.connection.localPort;
+  let returnTo = req.protocol + '://' + req.hostname;
+  const port = req.connection.localPort;
   if (port !== undefined && port !== 80 && port !== 443) {
-    returnTo += ':' + port;
+    returnTo = process.env.NODE_ENV === 'production' ? returnTo : returnTo + ':' + port;;
   }
+  req.logout();
 
   var logoutURL = new url.URL(
     util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN)
